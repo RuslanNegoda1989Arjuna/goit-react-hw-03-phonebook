@@ -3,18 +3,33 @@ import React, { Component } from 'react';
 import { PhonebookContainer, Title, TitleCont } from './App.styled';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { load, save } from './LocalStorage/LocalStorage';
 import { PhonebookForm } from './PhonebookForm/PhonebookForm';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  // додавання в  localStorage
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+
+    if (contacts !== prevState.contacts) {
+      save('contacts', contacts);
+    }
+  }
+
+  // з локалсторидж при першому завантаженні забираємо данні
+
+  componentDidMount() {
+    const lstContacts = load('contacts');
+
+    if (lstContacts) {
+      this.setState({ contacts: lstContacts });
+    }
+  }
 
   addContact = addContact => {
     const { contacts } = this.state;

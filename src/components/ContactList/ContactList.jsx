@@ -1,5 +1,7 @@
-import { BtnDelete, ContactIt, Item, ListBox } from './ContactList.styled';
+import { ContactIt, Item, ListBox } from './ContactList.styled';
 import PropTypes from 'prop-types';
+import { IconButton } from 'components/IconButton/IconButton';
+import { MdDeleteOutline } from 'react-icons/md';
 
 export const ContactList = ({ contacts, onDelete }) => {
   return (
@@ -11,9 +13,13 @@ export const ContactList = ({ contacts, onDelete }) => {
               <ContactIt>
                 {name}: {number}
               </ContactIt>
-              <BtnDelete type="button" onClick={() => onDelete(id)}>
-                Delete
-              </BtnDelete>
+              <IconButton
+                type="button"
+                onClick={() => onDelete(id)}
+                aria-label="Delete contact"
+              >
+                <MdDeleteOutline size="20px" />
+              </IconButton>
             </Item>
           );
         })}
